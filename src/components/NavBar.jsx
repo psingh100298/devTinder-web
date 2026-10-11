@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL, IMAGE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const NavBar = () => {
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
   const navigate = useNavigate();
   const handleLogout = () => {
     axios.post(`${BASE_URL}/logout`, {}, { withCredentials: true });
@@ -19,6 +20,7 @@ const NavBar = () => {
           👨‍💻 DevTinder
         </Link>
       </div>
+      {user && (
       <div className="flex gap-2">
         <div className="dropdown dropdown-end mx-5">
           <div
@@ -28,8 +30,8 @@ const NavBar = () => {
           >
             <div className="w-10 rounded-full">
               <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                alt="user photo"
+                src={user?.photoUrl || IMAGE_URL}
               />
             </div>
           </div>
@@ -56,6 +58,7 @@ const NavBar = () => {
           </ul>
         </div>
       </div>
+      )}
     </div>
   );
 };

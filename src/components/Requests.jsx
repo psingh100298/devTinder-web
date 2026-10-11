@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequests } from "../utils/requestSlice";
 import RequestsCard from "./RequestsCard";
+import EmptyState from "./EmptyState";
 
 const Requests = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,14 @@ const Requests = () => {
   }, []);
 
   if (!connectionRequests) return null;
-  if (connectionRequests.length === 0) return <p>No connection request receive</p>;
+  if (connectionRequests.length === 0)
+    return (
+      <EmptyState
+        icon="📭"
+        title="No requests yet"
+        message="When someone is interested in you, their request will show up here."
+      />
+    );
 
   return (
     <>

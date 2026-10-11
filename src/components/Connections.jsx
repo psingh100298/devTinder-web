@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
 import ConnectionCard from "./ConnectionCard";
+import EmptyState from "./EmptyState";
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,14 @@ const Connections = () => {
   }, []);
 
   if (!connectionsList) return;
-  if (connectionsList.length === 0) return <h1>No Connections!!</h1>;
+  if (connectionsList.length === 0)
+    return (
+      <EmptyState
+        icon="🤝"
+        title="No connections yet"
+        message="Start showing interest in developers from your feed to build your network."
+      />
+    );
   return (
     <div className="flex flex-col items-center my-10">
       <h1 className="font-bold text-2xl">Connections</h1>

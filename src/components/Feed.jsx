@@ -4,6 +4,7 @@ import { addFeed } from "../utils/feedSlice";
 import axios from "axios";
 import { useEffect } from "react";
 import UserCard from "./UserCard";
+import EmptyState from "./EmptyState";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
@@ -13,7 +14,7 @@ const Feed = () => {
     if (feed) return;
     try {
       const res = await axios.get(`${BASE_URL}/feed`, {withCredentials:true});
-      dispatch(addFeed(res));
+      dispatch(addFeed(res.data));
     } catch (err) {
       console.log(err.message);
     }
@@ -23,10 +24,17 @@ const Feed = () => {
     getFeed();
   }, []);
 if(!feed) return;
-if(!feed.length) return <p>No feed data!!</p>
+if(!feed.length)
+  return (
+    <EmptyState
+      icon="🎉"
+      title="You're all caught up!"
+      message="No new developers in your feed right now. Check back later."
+    />
+  );
   return (
     <div className="flex flex-col-3 justify-center items-center">
-      {feed?.data?.map((user) => (
+      {feed.map((user) => (
         <UserCard user={user} />
       ))}
     </div>
