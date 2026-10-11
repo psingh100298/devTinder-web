@@ -23,7 +23,7 @@ const EditProfile = ({ user }) => {
     const res = await axios.patch(`${BASE_URL}/profile/edit`, newData, {
       withCredentials: true,
     });
-    dispatch(addUser(res));
+    dispatch(addUser(res.data));
   };
 
   return (

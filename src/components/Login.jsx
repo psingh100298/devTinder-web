@@ -2,12 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-  const [emailId, setEmailId] = useState("singh@gmail.com");
-  const [password, setPassword] = useState("1234567890");
+  const [emailId, setEmailId] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState('');
@@ -62,6 +62,9 @@ const Login = () => {
               Login
             </button>
           </div>
+          <p className="text-center">
+            New here? <Link to="/signup" className="link">Sign Up</Link>
+          </p>
         </div>
       </div>
     </div>

@@ -17,9 +17,10 @@ const Body = () => {
       const res = await axios.get(`${BASE_URL}/profile/view`, {
         withCredentials: true,
       });
-      dispatch(addUser(res));
+      dispatch(addUser(res.data));
     } catch (err) {
-      if (err.status === 401) navigate("/login");
+      if (err.status === 401 && window.location.pathname !== "/signup")
+        navigate("/login");
       console.log("ERROR:", err.message);
     }
   };
