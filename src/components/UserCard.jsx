@@ -6,7 +6,7 @@ const UserCard = ({ user }) => {
   const removeUserFromFeed = useFeedStore((store) => store.removeUserFromFeed);
 
   const handleIgnore = async () => {
-    console.log("interesteduser", user);
+  
     await axios.post(
       `${BASE_URL}/request/send/ignored/${user._id}`,
       {},

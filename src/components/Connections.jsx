@@ -15,7 +15,7 @@ const Connections = () => {
     });
     addConnections(res.data.data);
   };
-  console.log("connectionlist", connectionsList);
+  
   useEffect(() => {
     connections();
   }, []);

@@ -21,7 +21,7 @@ const Body = () => {
     } catch (err) {
       if (err.status === 401 && window.location.pathname !== "/signup")
         navigate("/login");
-      console.log("ERROR:", err.message);
+  
     }
   };
 

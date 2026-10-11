@@ -14,7 +14,6 @@ const RequestsCard = ({ user }) => {
     removeRequest(user._id);
   };
 
-console.log('requests card', user);
 
   return (
     <div className="card bg-base-100 w-96 shadow-sm m-5">
