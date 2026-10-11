@@ -1,16 +1,26 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL, IMAGE_URL } from "../utils/constants";
-import { removeUser } from "../utils/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import useUserStore from "../utils/userStore";
+import useFeedStore from "../utils/feedStore";
+import useConnectionStore from "../utils/connectionStore";
+import useRequestStore from "../utils/requestStore";
 
 const NavBar = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((store) => store.user);
+  const user = useUserStore((store) => store.user);
+  const removeUser = useUserStore((store) => store.removeUser);
+  const removeFeed = useFeedStore((store) => store.removeFeed);
+  const removeConnections = useConnectionStore(
+    (store) => store.removeConnections,
+  );
+  const removeRequests = useRequestStore((store) => store.removeRequests);
   const navigate = useNavigate();
   const handleLogout = () => {
     axios.post(`${BASE_URL}/logout`, {}, { withCredentials: true });
-    dispatch(removeUser());
+    removeUser();
+    removeFeed();
+    removeConnections();
+    removeRequests();
     navigate("/login");
   };
   return (

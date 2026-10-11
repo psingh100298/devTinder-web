@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
+import useUserStore from "../utils/userStore";
 import { BASE_URL } from "../utils/constants";
 
 const EditProfile = ({ user }) => {
@@ -10,7 +9,7 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user?.gender);
   const [about, setAbout] = useState(user?.about);
   const [age, setAge] = useState(user?.age);
-  const dispatch = useDispatch();
+  const addUser = useUserStore((store) => store.addUser);
 
   const handleUpdateProfile = async () => {
     const newData = {
@@ -23,7 +22,7 @@ const EditProfile = ({ user }) => {
     const res = await axios.patch(`${BASE_URL}/profile/edit`, newData, {
       withCredentials: true,
     });
-    dispatch(addUser(res.data));
+    addUser(res.data);
   };
 
   return (

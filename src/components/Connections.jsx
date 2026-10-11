@@ -1,20 +1,19 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addConnections } from "../utils/connectionSlice";
+import useConnectionStore from "../utils/connectionStore";
 import ConnectionCard from "./ConnectionCard";
 import EmptyState from "./EmptyState";
 
 const Connections = () => {
-  const dispatch = useDispatch();
-  const connectionsList = useSelector((store) => store.connection);
+  const connectionsList = useConnectionStore((store) => store.connections);
+  const addConnections = useConnectionStore((store) => store.addConnections);
 
   const connections = async () => {
     const res = await axios.get(`${BASE_URL}/user/connections`, {
       withCredentials: true,
     });
-    dispatch(addConnections(res.data.data));
+    addConnections(res.data.data);
   };
   console.log("connectionlist", connectionsList);
   useEffect(() => {

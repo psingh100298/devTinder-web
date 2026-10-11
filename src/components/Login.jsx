@@ -1,14 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
+import useUserStore from "../utils/userStore";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
+  const addUser = useUserStore((store) => store.addUser);
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -22,7 +21,7 @@ const Login = () => {
         },
         { withCredentials: true },
       );
-      dispatch(addUser(res.data));
+      addUser(res.data);
       navigate("/feed");
     } catch (err) {
       setError(err?.response?.data || "Something went wrong!");

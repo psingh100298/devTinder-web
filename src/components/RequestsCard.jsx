@@ -1,12 +1,17 @@
 import { BASE_URL, IMAGE_URL } from "../utils/constants";
 import axios from "axios";
+import useRequestStore from "../utils/requestStore";
 const RequestsCard = ({ user }) => {
+  const removeRequest = useRequestStore((store) => store.removeRequest);
+
   const handleAccept = async () => {
     await axios.post(`${BASE_URL}/request/review/accepted/${user?._id}`, {}, {withCredentials:true});
+    removeRequest(user._id);
   };
 
   const handleReject = async () => {
     await axios.post(`${BASE_URL}/request/review/rejected/${user?._id}`,  {}, {withCredentials:true});
+    removeRequest(user._id);
   };
 
 console.log('requests card', user);

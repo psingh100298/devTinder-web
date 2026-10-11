@@ -1,21 +1,20 @@
 import { BASE_URL } from "../utils/constants";
 import { useEffect } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { addRequests } from "../utils/requestSlice";
+import useRequestStore from "../utils/requestStore";
 import RequestsCard from "./RequestsCard";
 import EmptyState from "./EmptyState";
 
 const Requests = () => {
-  const dispatch = useDispatch();
-  const connectionRequests = useSelector((store) => store.request);
+  const connectionRequests = useRequestStore((store) => store.requests);
+  const addRequests = useRequestStore((store) => store.addRequests);
 
   const requestsReceive = async () => {
     const res = await axios.get(`${BASE_URL}/user/requests/received`, {
       withCredentials: true,
     });
     console.log("requests receive", res);
-    dispatch(addRequests(res?.data?.data));
+    addRequests(res?.data?.data);
   };
 
   useEffect(() => {

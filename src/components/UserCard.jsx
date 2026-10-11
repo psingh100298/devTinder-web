@@ -1,8 +1,9 @@
 import axios from "axios";
 import { BASE_URL, IMAGE_URL } from "../utils/constants";
+import useFeedStore from "../utils/feedStore";
 
 const UserCard = ({ user }) => {
-
+  const removeUserFromFeed = useFeedStore((store) => store.removeUserFromFeed);
 
   const handleIgnore = async () => {
     console.log("interesteduser", user);
@@ -11,6 +12,7 @@ const UserCard = ({ user }) => {
       {},
       { withCredentials: true },
     );
+    removeUserFromFeed(user._id);
   };
 
   const handleInterested = async () => {
@@ -19,6 +21,7 @@ const UserCard = ({ user }) => {
       {},
       { withCredentials: true },
     );
+    removeUserFromFeed(user._id);
   };
   return (
     <div className="card bg-base-100 w-96 shadow-sm m-5">

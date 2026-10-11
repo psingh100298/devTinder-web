@@ -1,6 +1,5 @@
 import axios from "axios";
-import appStore from "./appStore";
-import { showToast } from "./toastSlice";
+import useToastStore from "./toastStore";
 
 const TOAST_METHODS = ["post", "put", "patch"];
 
@@ -11,20 +10,18 @@ const getMessage = (data, fallback) =>
 axios.interceptors.response.use(
   (res) => {
     if (TOAST_METHODS.includes(res.config.method)) {
-      appStore.dispatch(
-        showToast({ type: "success", message: getMessage(res.data, "Success") }),
-      );
+      useToastStore
+        .getState()
+        .showToast({ type: "success", message: getMessage(res.data, "Success") });
     }
     return res;
   },
   (err) => {
     if (TOAST_METHODS.includes(err.config?.method)) {
-      appStore.dispatch(
-        showToast({
-          type: "error",
-          message: getMessage(err.response?.data, "Something went wrong!"),
-        }),
-      );
+      useToastStore.getState().showToast({
+        type: "error",
+        message: getMessage(err.response?.data, "Something went wrong!"),
+      });
     }
     return Promise.reject(err);
   },

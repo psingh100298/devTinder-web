@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { hideToast } from "../utils/toastSlice";
+import useToastStore from "../utils/toastStore";
 
 const Toast = () => {
-  const toast = useSelector((store) => store.toast);
-  const dispatch = useDispatch();
+  const toast = useToastStore((store) => store.toast);
+  const hideToast = useToastStore((store) => store.hideToast);
 
   useEffect(() => {
     if (!toast) return;
-    const timer = setTimeout(() => dispatch(hideToast()), 3000);
+    const timer = setTimeout(() => hideToast(), 3000);
     return () => clearTimeout(timer);
-  }, [toast, dispatch]);
+  }, [toast, hideToast]);
 
   if (!toast) return null;
 
